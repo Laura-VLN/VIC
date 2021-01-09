@@ -26,8 +26,6 @@ class CreateUsersTable extends Migration
             $table->string('location')->nullable();
             $table->text('cpas_status')->nullable();
             $table->integer('role')->default(0);
-            $table->integer('coach_id')->nullable();
-            $table->integer('sponsor_id')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
