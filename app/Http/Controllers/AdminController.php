@@ -357,8 +357,6 @@ class AdminController extends Controller
             'birth_date' => ['nullable'],
             'cpas_status' => ['nullable','max:255'],
             'description' => ['nullable'],
-            'sponsor_id' => ['nullable'],
-            'coach_id' => ['nullable']
         ]);
         
         $user = User::find($id);
@@ -370,8 +368,6 @@ class AdminController extends Controller
         $user->birth_date = $validRequest['birth_date'];
         $user->cpas_status = $validRequest['cpas_status'];
         $user->description = $validRequest['description'];
-        $user->sponsor_id = $validRequest['sponsor_id'];
-        $user->coach_id = $validRequest['coach_id'];
 
         $user->save();
         $coachs = User::where('role',1)->get();

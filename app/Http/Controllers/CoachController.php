@@ -21,7 +21,7 @@ class CoachController extends Controller
             return view('user.coach.coach',compact('coach','documents','agenda'))->with('coachId',$coachId);
         }
     }
-
+//----------------> Change requete
     public function showyoung(){
         $iscoach = (Auth::user()->role == 1) ? true : false;
         $issponsor = (Auth::user()->role == 2) ? true : false;
