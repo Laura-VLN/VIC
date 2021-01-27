@@ -1,3 +1,4 @@
+<!-- compact('user','coachs','sponsors','coaches_user','sponsors_user') -->
 @extends('layouts.baseadmin')
 @section('content')
     <h1>Editer un Utilisateur</h1>
@@ -72,6 +73,7 @@
                         </span>
                 @enderror
             </user-input-text>
+<!-- Need change -->
             {{--  coach  --}}
             <user-input-dropdown value="{{ $user->coach_id }}" required="false" id="coach_id" label="Coach" error="@error('coach_id') is-invalid @enderror">
                 <option value='' @if($user->coach_id == null)selected @endif>Aucun</option>
@@ -84,6 +86,7 @@
                     </span>
                 @enderror
             </user-input-dropdown>
+<!-- Need change -->
             {{--  sponsor  --}}
             <user-input-dropdown value="{{ $user->sponsor_id }}" required="false" id="sponsor_id" label="Parrain" error="@error('sponsor_id') is-invalid @enderror">
                 <option value='' @if($user->sponsor_id == null)selected @endif>Aucun</option>

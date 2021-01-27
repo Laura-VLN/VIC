@@ -9,6 +9,8 @@ use App\Job;
 use App\Housing;
 use App\HousingGallery;
 use App\Agenda;
+use App\Coaches_users;
+use App\Sponsors_users;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -337,13 +339,15 @@ class AdminController extends Controller
     {   
         return view('admin.user.user_create')->with('updated',false);
     }
-
+///////////////////////// In Progress
     public function userEditView($id)
     {   
         $user = User::findOrFail($id);
         $coachs = User::where('role',1)->get();
         $sponsors = User::where('role',2)->get();
-        return view('admin.user.user_edit',compact('user','coachs','sponsors'))->with('updated',false);
+        $coaches_user = Coaches_users::where('user_id', $id)->get(); // Récupère la paire coach_id -- user_id
+        $sponsors_user = Sponsors_users::where('user_id', $id)->get(); // Récupère la paire sponsor_id -- user_id
+        return view('admin.user.user_edit',compact('user','coachs','sponsors','coaches_user','sponsors_user'))->with('updated',false);
     }
 
     public function userEdit(Request $request, $id)
@@ -357,6 +361,10 @@ class AdminController extends Controller
             'birth_date' => ['nullable'],
             'cpas_status' => ['nullable','max:255'],
             'description' => ['nullable'],
+            'coaches'   => ['nullable','array'],
+            'coaches.*' => ['nullable','integer'],
+            'sponsors'   => ['nullable','array'],
+            'sponsors.*' => ['nullable','integer'],
         ]);
         
         $user = User::find($id);
@@ -370,9 +378,44 @@ class AdminController extends Controller
         $user->description = $validRequest['description'];
 
         $user->save();
+
+        // update relation coach -- user
+        $selectedCoaches = $request->only('coaches'); //coaches envoyé par le formulaire doit être un array d'Ids
+        $currentDbCoaches = Coaches_users::where('user_id', $id)->pluck('coach_id'); //récupère une collection (array) de coach_id appartenant à user_id
+
+        $coachesToDelete = array_diff($currentDbCoaches, $selectedCoaches);
+        $coachesToAdd = array_diff($selectedCoaches, $currentDbCoaches);
+
+        Coaches_users::where('user_id', $id)->whereIn('coach_id',$coachesToDelete)->delete();
+
+        foreach($coachesToAdd as $coachToAdd){
+            Coaches_users::create([
+                'coach_id' => $coachToAdd,
+                'user_id' => $id
+            ]);
+        }
+
+        // update relation sponsor -- user
+        $selectedSponsors = $request->only('sponsors'); //sponsors envoyé par le formulaire doit être un array d'Ids
+        $currentDbSponsors = Sponsors_users::where('user_id', $id)->pluck('sponsor_id'); //récupère une collection (array) de sponsor_id appartenant à user_id
+
+        $sponsorsToDelete = array_diff($currentDbSponsors, $selectedSponsors);
+        $sponsorsToAdd = array_diff($selectedSponsors, $currentDbSponsors);
+
+        Sponsors_users::where('user_id', $id)->whereIn('sponsor_id',$sponsorsToDelete)->delete();
+        
+        foreach($sponsorsToAdd as $sponsorToAdd){
+            Sponsors_users::create([
+                'sponsor_id' => $sponsorToAdd,
+                'user_id' => $id
+            ]);
+        }
+
         $coachs = User::where('role',1)->get();
         $sponsors = User::where('role',2)->get();
-        return view('admin.user.user_edit',compact('user','coachs','sponsors'))->with('updated',true);
+        $coaches_user = Coaches_users::where('user_id', $id)->get(); // Récupère la paire coach_id -- user_id
+        $sponsors_user = Sponsors_users::where('user_id', $id)->get(); // Récupère la paire sponsor_id -- user_id
+        return view('admin.user.user_edit',compact('user','coachs','sponsors','coaches_user','sponsors_user'))->with('updated',true);
     }
 
     public function userCreate(Request $request)
