@@ -9,6 +9,7 @@ use App\Job;
 use App\Housing;
 use App\HousingGallery;
 use App\Agenda;
+use App\Report;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -412,4 +413,10 @@ class AdminController extends Controller
 
         return redirect('/admin/user/list/1');
     }
+
+    public function GetReports()
+     {
+        $reports = Report::get();
+         return view('admin.reports.reports',compact('reports'));
+     }
 }

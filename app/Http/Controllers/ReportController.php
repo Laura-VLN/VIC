@@ -49,7 +49,7 @@ class ReportController extends Controller
       * @param  \App\Document  $document
       * @return \Illuminate\Http\Response
       */
-     public function GetAllReports(Request $request)
+     public function GetCoachReports(Request $request)
      {
         $reports = Report::where('author_id',Auth::user()->id)->get();
          return view('reports.reports',compact('reports'));
