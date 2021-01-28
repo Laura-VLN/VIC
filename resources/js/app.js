@@ -61,6 +61,7 @@ Vue.component('admin-housing-list', require('./components/Admin/AdminHousing/Lay
 Vue.component('user-input-text', require('./components/Admin/AdminUser/UserEditInputText.vue').default);
 Vue.component('user-input-dropdown', require('./components/Admin/AdminUser/UserEditInputDropdown.vue').default);
 Vue.component('user-input-textarea', require('./components/Admin/AdminUser/UserEditInputTextarea.vue').default);
+Vue.component('user-input-slimselect', require('./components/Admin/AdminUser/UserEditInputSlimSelect.vue').default); /////////////////////////
 Vue.component('user-input-images', require('./components/Admin/AdminHousing/UserEditInputImages.vue').default);
 Vue.component('user-input-agenda', require('./components/Admin/AdminAgenda/InputUserAgenda.vue').default);
 

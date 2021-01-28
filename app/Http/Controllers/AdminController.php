@@ -380,7 +380,7 @@ class AdminController extends Controller
         $user->save();
 
         // update relation coach -- user
-        $selectedCoaches = $request->only('coaches'); //coaches envoyé par le formulaire doit être un array d'Ids
+        $selectedCoaches = $validRequest['coaches']; //coaches envoyé par le formulaire doit être un array d'Ids
         $currentDbCoaches = Coaches_users::where('user_id', $id)->pluck('coach_id'); //récupère une collection (array) de coach_id appartenant à user_id
 
         $coachesToDelete = array_diff($currentDbCoaches, $selectedCoaches);
@@ -396,7 +396,7 @@ class AdminController extends Controller
         }
 
         // update relation sponsor -- user
-        $selectedSponsors = $request->only('sponsors'); //sponsors envoyé par le formulaire doit être un array d'Ids
+        $selectedSponsors = $validRequest['sponsors']; //sponsors envoyé par le formulaire doit être un array d'Ids
         $currentDbSponsors = Sponsors_users::where('user_id', $id)->pluck('sponsor_id'); //récupère une collection (array) de sponsor_id appartenant à user_id
 
         $sponsorsToDelete = array_diff($currentDbSponsors, $selectedSponsors);
