@@ -345,8 +345,21 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
         $coachs = User::where('role',1)->get();
         $sponsors = User::where('role',2)->get();
-        $coaches_user = Coaches_users::where('user_id', $id)->get(); // Récupère la paire coach_id -- user_id
-        $sponsors_user = Sponsors_users::where('user_id', $id)->get(); // Récupère la paire sponsor_id -- user_id
+        $coaches_user = Coaches_users::where('user_id', $id)->get('coach_id')->toArray(); // Récupère coach_id assosié au user
+        $sponsors_user = Sponsors_users::where('user_id', $id)->get('sponsor_id')->toArray(); // Récupère sponsor_id assicié au user
+
+        $temp = [];
+        foreach ($coaches_user as $key => $val) {
+            array_push($temp, $val['coach_id']);
+        }
+        $coaches_user = $temp;
+
+        $temp = [];
+        foreach ($sponsors_user as $key => $val) {
+            array_push($temp, $val['sponsor_id']);
+        }
+        $sponsors_user = $temp;
+    
         return view('admin.user.user_edit',compact('user','coachs','sponsors','coaches_user','sponsors_user'))->with('updated',false);
     }
 
@@ -361,11 +374,11 @@ class AdminController extends Controller
             'birth_date' => ['nullable'],
             'cpas_status' => ['nullable','max:255'],
             'description' => ['nullable'],
-            'coaches'   => ['nullable','array'],
-            'coaches.*' => ['nullable','integer'],
-            'sponsors'   => ['nullable','array'],
-            'sponsors.*' => ['nullable','integer'],
+            'coaches' => ['nullable'],
+            'sponsors' => ['nullable'],
         ]);
+
+        //dd($validRequest['coaches']);
         
         $user = User::find($id);
         $user->first_name = $validRequest['first_name'];
@@ -380,41 +393,69 @@ class AdminController extends Controller
         $user->save();
 
         // update relation coach -- user
-        $selectedCoaches = $validRequest['coaches']; //coaches envoyé par le formulaire doit être un array d'Ids
-        $currentDbCoaches = Coaches_users::where('user_id', $id)->pluck('coach_id'); //récupère une collection (array) de coach_id appartenant à user_id
+        if(isset($validRequest['coaches'])){
+            $selectedCoaches = $validRequest['coaches']; //coaches envoyé par le formulaire doit être un array d'Ids
+            $currentDbCoaches = Coaches_users::where('user_id', $id)->pluck('coach_id')->toArray(); //récupère une collection (array) de coach_id appartenant à user_id
 
-        $coachesToDelete = array_diff($currentDbCoaches, $selectedCoaches);
-        $coachesToAdd = array_diff($selectedCoaches, $currentDbCoaches);
+            $coachesToDelete = array_diff($currentDbCoaches, $selectedCoaches);
+            $coachesToAdd = array_diff($selectedCoaches, $currentDbCoaches);
 
-        Coaches_users::where('user_id', $id)->whereIn('coach_id',$coachesToDelete)->delete();
+            Coaches_users::where('user_id', $id)->whereIn('coach_id',$coachesToDelete)->delete();
 
-        foreach($coachesToAdd as $coachToAdd){
-            Coaches_users::create([
-                'coach_id' => $coachToAdd,
-                'user_id' => $id
-            ]);
+            foreach($coachesToAdd as $coachToAdd){
+                Coaches_users::create([
+                    'coach_id' => $coachToAdd,
+                    'user_id' => $id
+                ]);
+            }
         }
+        else{
+            Coaches_users::where('user_id', $id)->delete();
+        }
+        
 
         // update relation sponsor -- user
-        $selectedSponsors = $validRequest['sponsors']; //sponsors envoyé par le formulaire doit être un array d'Ids
-        $currentDbSponsors = Sponsors_users::where('user_id', $id)->pluck('sponsor_id'); //récupère une collection (array) de sponsor_id appartenant à user_id
+        if(isset($validRequest['sponsors'])){
+            $selectedSponsors = $validRequest['sponsors']; //sponsors envoyé par le formulaire doit être un array d'Ids
+            $currentDbSponsors = Sponsors_users::where('user_id', $id)->pluck('sponsor_id')->toArray(); //récupère une collection (array) de sponsor_id appartenant à user_id
 
-        $sponsorsToDelete = array_diff($currentDbSponsors, $selectedSponsors);
-        $sponsorsToAdd = array_diff($selectedSponsors, $currentDbSponsors);
+            $sponsorsToDelete = array_diff($currentDbSponsors, $selectedSponsors);
+            $sponsorsToAdd = array_diff($selectedSponsors, $currentDbSponsors);
 
-        Sponsors_users::where('user_id', $id)->whereIn('sponsor_id',$sponsorsToDelete)->delete();
-        
-        foreach($sponsorsToAdd as $sponsorToAdd){
-            Sponsors_users::create([
-                'sponsor_id' => $sponsorToAdd,
-                'user_id' => $id
-            ]);
+
+            
+            if($sponsorsToDelete != null){
+                Sponsors_users::where('user_id', $id)->whereIn('sponsor_id',$sponsorsToDelete)->delete();
+            }
+            
+            foreach($sponsorsToAdd as $sponsorToAdd){
+                Sponsors_users::create([
+                    'sponsor_id' => $sponsorToAdd,
+                    'user_id' => $id
+                ]);
+            }
+        }
+        else{
+            Sponsors_users::where('user_id', $id)->delete();
         }
 
         $coachs = User::where('role',1)->get();
         $sponsors = User::where('role',2)->get();
-        $coaches_user = Coaches_users::where('user_id', $id)->get(); // Récupère la paire coach_id -- user_id
-        $sponsors_user = Sponsors_users::where('user_id', $id)->get(); // Récupère la paire sponsor_id -- user_id
+        $coaches_user = Coaches_users::where('user_id', $id)->get()->toArray(); // Récupère la paire coach_id -- user_id
+        $sponsors_user = Sponsors_users::where('user_id', $id)->get()->toArray(); // Récupère la paire sponsor_id -- user_id
+
+        $temp = [];
+        foreach ($coaches_user as $key => $val) {
+            array_push($temp, $val['coach_id']);
+        }
+        $coaches_user = $temp;
+        
+        $temp = [];
+        foreach ($sponsors_user as $key => $val) {
+            array_push($temp, $val['sponsor_id']);
+        }
+        $sponsors_user = $temp;
+        
         return view('admin.user.user_edit',compact('user','coachs','sponsors','coaches_user','sponsors_user'))->with('updated',true);
     }
 

@@ -73,24 +73,23 @@
                         </span>
                 @enderror
             </user-input-text>
-<!-- Need change -->
+
             {{--  coach  --}}
-                <user-input-slimselect label="Coach" id="coaches">
+                <user-input-slimselect label="Coach" id="coaches" name="coaches[]">
                     @foreach ($coachs as $coach)
-                        <option value={{ $coach->id}} @if($user->coach_id == $coach->id)selected @endif>{{$coach->first_name}}</option>
+                        <option value={{ $coach->id}} @if(array_search($coach->id, $coaches_user) !== false)selected @endif >{{$coach->first_name}}</option>
                     @endforeach
                     @error('coaches')
                         <span class="invalid-feedback" role="alert" v-slot:error>
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                </user-input-slimselect>
+                </user-input-slimselect> 
             
-<!-- Need change -->
             {{--  sponsor  --}}
-            <user-input-slimselect label="sponsor" id="sponsors">
+            <user-input-slimselect label="sponsor" id="sponsors" name="sponsors[]">
                     @foreach ($sponsors as $sponsor)
-                        <option value={{ $sponsor->id}} @if($user->sponsor_id == $sponsor->id)selected @endif >{{$sponsor->first_name}}</option>
+                        <option value={{ $sponsor->id}} @if(array_search($sponsor->id, $sponsors_user) !== false)selected @endif >{{$sponsor->first_name}}</option>
                     @endforeach
                     @error('sponsors')
                         <span class="invalid-feedback" role="alert" v-slot:error>
