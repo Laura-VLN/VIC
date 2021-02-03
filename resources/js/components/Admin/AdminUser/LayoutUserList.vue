@@ -17,7 +17,7 @@
                     <th>Coach</th>
                     <th>Parrain</th>
                 </tr>
-                <tr v-for="user in users">
+                <tr v-for="user in users" v-bind:key="user">
                     <td style="width:200px;"><a v-bind:href="'/admin/user/edit/'+user.id">Modifier</a><a v-bind:href="'/admin/user/delete/'+user.id">Supprimer</a></td>
                     <td>{{user.id}}</td>
                     <td>{{user.first_name}}</td>
@@ -28,8 +28,12 @@
                     <td v-if="user.role == 2">Parrain</td>
                     <td v-if="user.role == 1">Coach</td>
                     <td v-if="user.role == 0">Utilisateur</td>
-                    <td><a v-bind:href="'/admin/user/edit/'+user.coach_id" v-if="user.coach_id != null">Profile</a></td>
-                    <td><a v-bind:href="'/admin/user/edit/'+user.sponsor_id" v-if="user.sponsor_id != null">Profile</a></td>
+                    <td>
+                        <div v-for="(coach, index) in coachs" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+coach.coach_id" v-if="coach.user_id == user.id">Profile</a></div>
+                    </td>
+                    <td>
+                        <div v-for="(sponsor, index) in sponsors" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+sponsor.sponsor_id" v-if="sponsor.user_id == user.id">Profile</a></div>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -37,9 +41,21 @@
 </template>
 <script>
     export default {
-        props:['users'],
+        props:['users','coachs','sponsors'],
         mounted() {
             console.log('Component mounted.')
+        },
+        /* data(){
+            return {
+                result : ""
+            }
+        }, */
+        methods: {
+            getCoach: function(uid){
+                this.result = this.users.filter((item) => {
+                    if(item.id == uid) return item;
+                })
+            }
         }
     }
 </script>

@@ -332,7 +332,10 @@ class AdminController extends Controller
     public function user($page)
     {
         $users = User::skip((int)($page-1)*20)->take(20)->get();
-        return view('admin.user.user',compact('users'));
+        $coachs = Coaches_users::get();
+        $sponsors = Sponsors_users::get();
+
+        return view('admin.user.user',compact('users','coachs','sponsors'));
     }
 
     public function userCreateView()
@@ -489,6 +492,8 @@ class AdminController extends Controller
     public function userDelete(Request $request, $id){
         $user = User::find($id);
         $user->delete();
+        Coaches_users::where('user_id', $id)->delete();
+        Sponsors_users::where('user_id', $id)->delete();
 
         return redirect('/admin/user/list/1');
     }
