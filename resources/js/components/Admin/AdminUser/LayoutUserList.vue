@@ -14,10 +14,10 @@
                     <th>Email</th>
                     <th>Adresse</th>
                     <th>Grade</th>
-                    <th>Coach</th>
-                    <th>Parrain</th>
+                    <th>Coachs</th>
+                    <th>Parrains</th>
                 </tr>
-                <tr v-for="user in users" v-bind:key="user">
+                <tr v-for="(user, i) in users" v-bind:key="i">
                     <td style="width:200px;"><a v-bind:href="'/admin/user/edit/'+user.id">Modifier</a><a v-bind:href="'/admin/user/delete/'+user.id">Supprimer</a></td>
                     <td>{{user.id}}</td>
                     <td>{{user.first_name}}</td>
@@ -29,10 +29,10 @@
                     <td v-if="user.role == 1">Coach</td>
                     <td v-if="user.role == 0">Utilisateur</td>
                     <td>
-                        <div v-for="(coach, index) in coachs" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+coach.coach_id" v-if="coach.user_id == user.id">Profile</a></div>
+                        <div v-for="(coach, index) in getCoachs(user.id)" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+coach.coach_id">{{ returnCoachById(coach.coach_id) }}</a></div>
                     </td>
                     <td>
-                        <div v-for="(sponsor, index) in sponsors" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+sponsor.sponsor_id" v-if="sponsor.user_id == user.id">Profile</a></div>
+                        <div v-for="(sponsor, index) in getSponsors(user.id)" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+sponsor.sponsor_id">{{ returnSponsorById(sponsor.sponsor_id) }}</a></div>
                     </td>
                 </tr>
             </table>
@@ -41,22 +41,34 @@
 </template>
 <script>
     export default {
-        props:['users','coachs','sponsors'],
+        props:['users','coaches_users','sponsors_users','coachs','sponsors'],
         mounted() {
             console.log('Component mounted.')
         },
-        /* data(){
-            return {
-                result : ""
-            }
-        }, */
         methods: {
-            getCoach: function(uid){
-                this.result = this.users.filter((item) => {
-                    if(item.id == uid) return item;
-                })
+            getCoachs: function(uid){
+                this.currentUser = uid;
+                return this.coaches_users.filter(this.checkCoach);
+            },
+            checkCoach(coach) {
+                return coach.user_id == this.currentUser;
+            },
+            getSponsors: function(uid){
+                this.currentUser = uid;
+                return this.sponsors_users.filter(this.checkSponsor);
+            },
+            checkSponsor(sponsor) {
+                return sponsor.user_id == this.currentUser;
+            },
+            returnCoachById(cid){
+                let coach = this.coachs.find(elem => elem.id == cid);
+                return coach.first_name + " " + coach.last_name;
+            },
+            returnSponsorById(sid){
+                let sponsor = this.sponsors.find(elem => elem.id == sid);
+                return sponsor.first_name + " " + sponsor.last_name;
             }
-        }
+        },
     }
 </script>
 <style scoped lang="scss">

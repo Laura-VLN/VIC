@@ -333,10 +333,12 @@ class AdminController extends Controller
     public function user($page)
     {
         $users = User::skip((int)($page-1)*20)->take(20)->get();
-        $coachs = Coaches_users::get();
-        $sponsors = Sponsors_users::get();
+        $coaches_users = Coaches_users::get();
+        $sponsors_users = Sponsors_users::get();
+        $coachs = User::where('role',1)->get();
+        $sponsors = User::where('role',2)->get();
 
-        return view('admin.user.user',compact('users','coachs','sponsors'));
+        return view('admin.user.user',compact('users','coaches_users','sponsors_users','coachs','sponsors'));
     }
 
     public function userCreateView()
