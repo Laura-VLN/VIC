@@ -342,7 +342,7 @@ class AdminController extends Controller
     {   
         return view('admin.user.user_create')->with('updated',false);
     }
-///////////////////////// In Progress
+
     public function userEditView($id)
     {   
         $user = User::findOrFail($id);
