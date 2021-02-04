@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'],function(){
         Route::get('/young','CoachController@showyoung');
         Route::get('/profile/upload/{id}','DocumentController@index');
         Route::get('/young/create_agenda/{id}','CoachController@storeAgendaView');
+        Route::get('/profile/rapport','ReportController@GetCoachReports');
+
         
         Route::post('/job/{page}','JobController@filter');
         Route::post('/logement/{page}','HousingController@filter');
@@ -40,6 +42,8 @@ Route::group(['middleware' => 'auth'],function(){
         Route::post('/young','CoachController@addAgenda');
         Route::post('/profile/upload/{id}','DocumentController@store');
         Route::post('/profile/download','DocumentController@get');
+        Route::post('/report/upload','ReportController@store')->name('upload.uploadReport');
+        Route::post('/report/download/{id}','ReportController@get');
 
 
         
@@ -68,6 +72,8 @@ Route::group(['middleware' => 'auth'],function(){
             Route::get('/admin/agenda/list/{page}','AdminController@agenda');
             Route::get('/admin/agenda/create','AdminController@agendaCreateView');
 
+            Route::get('/admin/rapport','AdminController@GetReports');
+
             
             Route::post('/admin/user/create','AdminController@userCreate');
             Route::post('/admin/user/edit/{id}','AdminController@userEdit');
@@ -85,6 +91,7 @@ Route::group(['middleware' => 'auth'],function(){
             Route::post('/admin/logement/create','AdminController@logementCreate');
             Route::post('/admin/logement/edit/{id}','AdminController@logementEdit');
             Route::post('/admin/logement/delimg/{id}','AdminController@logementImage');
+
         });
     });
 });

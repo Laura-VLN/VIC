@@ -10,10 +10,10 @@
             {{-- recement --}}
             <div class="col-12 col-md-6 d-flex flex-column text-center pt-3">
                 <h4 class="ml-5 mr-auto px-1 title-profile pb-1 mb-3">Créer un compte rendu</h4>
-                <form class="text-left mx-5 my-4" action="">
+                <form class="text-left mx-5 my-4" method="POST" action="{{route('upload.uploadReport')}}" enctype="multipart/form-data">
                     @csrf
-                    <input class="my-2" type="text" name="" id="" placeholder="intitulé"><br>
-                    <textarea class="my-2" name="" id="" cols="60" rows="10" placeholder="contenu"></textarea><br>
+                    <input class="my-2" type="text" name="title" id="" placeholder="intitulé"><br>
+                    <input type="file" name="report"><br>
                     <input type="submit" value="Envoyer">
                 </form>
             </div>
