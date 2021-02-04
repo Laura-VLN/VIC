@@ -9,12 +9,9 @@ use App\Job;
 use App\Housing;
 use App\HousingGallery;
 use App\Agenda;
-<<<<<<< HEAD
 use App\Coaches_users;
 use App\Sponsors_users;
-=======
 use App\Report;
->>>>>>> yannick
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
