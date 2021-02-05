@@ -72,6 +72,7 @@
     }
 </script>
 <style scoped lang="scss">
+@import "../../../../sass/app.scss";
 .userlist{
     overflow-y:scroll;
     max-height:90%;
@@ -89,7 +90,7 @@
             margin-top:auto;
             margin-bottom:auto;
             padding-right:20px;
-            color:grey;
+            color:$violet;
             text-decoration:none;
             &:hover{
                 color:blue;

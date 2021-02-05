@@ -58,7 +58,7 @@
                 @enderror
             </user-input-text>
             {{--  cpas status  --}}
-            <user-input-text required="false" id="cpas_status" type="text" label="Status CPAS" value="{{ $user->cpas_status }}" error="@error('cpas_status') is-invalid @enderror">
+            <user-input-text required="false" id="cpas_status" type="text" label="Statut CPAS" value="{{ $user->cpas_status }}" error="@error('cpas_status') is-invalid @enderror">
                 @error('cpas_status')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -87,7 +87,7 @@
                 </user-input-slimselect> 
             
             {{--  sponsor  --}}
-            <user-input-slimselect label="sponsor" id="sponsors" name="sponsors[]" error="@error('sponsors') is-invalid @enderror">
+            <user-input-slimselect label="Parrain" id="sponsors" name="sponsors[]" error="@error('sponsors') is-invalid @enderror">
                     @foreach ($sponsors as $sponsor)
                         <option value={{ $sponsor->id}} @if(array_search($sponsor->id, $sponsors_user) !== false)selected @endif >{{$sponsor->first_name}} {{$sponsor->last_name}}</option>
                     @endforeach
@@ -104,7 +104,7 @@
                         {{ __('Enregistrer les modifications') }}
                     </button>
                     @if($updated == true)
-                        <span class="text-success">Les modifications ont bien été enregistrée !</span>
+                        <span class="text-success">Les modifications ont bien été enregistrées !</span>
                     @endif
                 </div>
             </div>
