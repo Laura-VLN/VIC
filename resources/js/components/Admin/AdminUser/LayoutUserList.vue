@@ -5,15 +5,15 @@
             <a href="/admin/user/create"><i class="fas fa-plus"></i> Créer un utilisateur</a>
         </div>
         <div class="scollertable">
-            <table>
+            <table id="users">
                 <tr>
                     <th>Action</th>
                     <th>Id</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
+                    <th @click="sortTable(2)">Prénom</th>
+                    <th @click="sortTable(3)">Nom</th>
                     <th>Email</th>
                     <th>Adresse</th>
-                    <th>Grade</th>
+                    <th @click="sortTable(6)">Grade</th>
                     <th>Coachs</th>
                     <th>Parrains</th>
                 </tr>
@@ -42,8 +42,15 @@
 <script>
     export default {
         props:['users','coaches_users','sponsors_users','coachs','sponsors'],
+
         mounted() {
             console.log('Component mounted.')
+            this.sortTable(this.sortBy);
+        },
+        data(){
+            return {
+                sortBy: 6
+            }
         },
         methods: {
             getCoachs: function(uid){
@@ -67,6 +74,31 @@
             returnSponsorById(sid){
                 let sponsor = this.sponsors.find(elem => elem.id == sid);
                 return sponsor.first_name + " " + sponsor.last_name;
+            },
+            sortTable(colId) {
+                var table, rows, switching, i, x, y, shouldSwitch;
+                table = document.getElementById("users");
+                this.sortBy = colId;
+                switching = true;
+
+                while (switching) {
+                    switching = false;
+                    rows = table.rows;
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName("TD")[this.sortBy];
+                        y = rows[i + 1].getElementsByTagName("TD")[this.sortBy];
+
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                    }
+                }
             }
         },
     }

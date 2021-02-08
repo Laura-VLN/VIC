@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::group(['middleware' => 'auth'],function(){
     Route::group(['middleware' => 'firstlogin'],function(){
