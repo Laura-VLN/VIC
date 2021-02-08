@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'],function(){
         Route::get('/logement/show/{id}','HousingController@show');
         Route::get('/parrain','SponsorController@index');
         Route::get('/coach','CoachController@index');
+        Route::get('/coach/{id}','CoachController@showcoach');
         Route::get('/formations/{page}','FormationController@index');
         Route::get('/formations/show/{id}','FormationController@show');
         Route::get('/young/{id}','CoachController@showyoung');

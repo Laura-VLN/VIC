@@ -12,16 +12,26 @@ use Illuminate\Support\Facades\DB;
 class CoachController extends Controller
 {
     public function index(){
-        $coachId = Auth::user()->coach_id;
-        if($coachId == null){
-            return view('user.coach.coach')->with('coachId',$coachId);
+        $coachs = User::
+                    join('coaches_users', 'users.id', '=', 'coaches_users.coach_id')
+                    ->where('user_id', Auth::user()->id)
+                    ->get();
+        if($coachs == null){
+            return view('user.coach.coach_show')->with('hascoaches', null);
         }else{
-            $coach = User::where('id',$coachId)->get()[0];
-            $documents = Document::where('user_id',$coachId)->get();
-            $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$coachId)->get();
-            return view('user.coach.coach',compact('coach','documents','agenda'))->with('coachId',$coachId);
+            // $documents = Document::where('user_id',$coachId)->get();
+            // $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$coachId)->get();
+            return view('user.coach.coach_show',compact('coachs'))->with('hascoaches', true);
         }
     }
+
+    public function showcoach($id){
+        $coach = User::findOrFail($id);
+        // $document = Document::where('user_id',$user->id);
+        // $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
+        return view('user.coach.coach',compact('coach'));
+    }
+    
 //----------------> Change requete
     public function showyoungs(){
         $iscoach = (Auth::user()->role == 1) ? true : false;
