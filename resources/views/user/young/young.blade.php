@@ -1,6 +1,5 @@
 @extends('layouts.base')
 @section('content')
-    @if($haveYoung)
         <title-sec theme="formation">Mon Jeune</title-sec>
         <div class="row w-100 m-0">
             <profile-card v-bind:user="{{  json_encode($user) }}"></profile-card>
@@ -24,8 +23,4 @@
                 <agenda v-bind:agenda="{{ json_encode($agenda) }}"></agenda>
             </div>
         </div>
-    @else
-        <h3 style="margin-left:50px;margin-top:30px;">Aucun jeune assigné</h3>
-        <small style="margin-left:50px;">Si vous pensez avoir un jeune assigné, contactez l'administration</small>
-    @endif
 @endsection

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
-use App\Document;
-use App\Agenda;
 use Auth;
+use App\User;
+use App\Agenda;
+use App\Document;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CoachController extends Controller
 {
@@ -22,21 +23,30 @@ class CoachController extends Controller
         }
     }
 //----------------> Change requete
-    public function showyoung($id){
+    public function showyoungs(){
         $iscoach = (Auth::user()->role == 1) ? true : false;
         $issponsor = (Auth::user()->role == 2) ? true : false;
         $isAdmin = (Auth::user()->role == 3) ? true : false;
-        $user = [];
-        if($iscoach || $isAdmin)$user = User::where('coach_id',Auth::user()->id)->take(1)->get();
-        if($issponsor || $isAdmin)$user = User::where('sponsor_id',Auth::user()->id)->take(1)->get();
-        if(sizeof($user) == 0){
-            return view('user.young.young')->with('haveYoung',false);
+        $users = [];
+        if($iscoach || $isAdmin){
+            $users = DB::table('users')
+            ->join('coaches_users', 'users.id', '=', 'coaches_users.user_id')
+            ->where('coach_id', Auth::user()->id)
+            ->get();
+        };
+        if($issponsor || $isAdmin)$users = User::where('sponsor_id',Auth::user()->id)->take(1)->get();
+        if(sizeof($users) == 0){
+            return view('user.young.young_show')->with('haveYoung',false);
         }else{
-            $user = $user[0];
-            $document = Document::where('user_id',$user->id);
-            $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
-            return view('user.young.young',compact('user','document','agenda'))->with('haveYoung',true);
+            return view('user.young.young_show',compact('users'))->with('haveYoung',true);
         }
+    }
+
+    public function showyoung($id){
+        $user = User::findOrFail($id);
+        $document = Document::where('user_id',$user->id);
+        $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
+        return view('user.young.young',compact('user', 'document', 'agenda'));
     }
 
     public function addAgenda(Request $request){

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-row col-12 col-md-6 profile-card" >
+    <div class="d-flex flex-row col-12 col-md-6 profile-card">
         <div class="mx-auto d-flex flex-row">
             <i class="fas fa-user"></i>
             <div class="d-flex flex-column justify-content-between informations">
