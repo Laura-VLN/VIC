@@ -22,7 +22,7 @@ class CoachController extends Controller
         }
     }
 //----------------> Change requete
-    public function showyoung(){
+    public function showyoung($id){
         $iscoach = (Auth::user()->role == 1) ? true : false;
         $issponsor = (Auth::user()->role == 2) ? true : false;
         $isAdmin = (Auth::user()->role == 3) ? true : false;

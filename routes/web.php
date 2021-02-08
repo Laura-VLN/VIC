@@ -30,7 +30,8 @@ Route::group(['middleware' => 'auth'],function(){
         Route::get('/coach','CoachController@index');
         Route::get('/formations/{page}','FormationController@index');
         Route::get('/formations/show/{id}','FormationController@show');
-        Route::get('/young','CoachController@showyoung');
+        Route::get('/young/{id}','CoachController@showyoung');
+        Route::get('/young','CoachController@showyoungs');
         Route::get('/profile/upload/{id}','DocumentController@index');
         Route::get('/young/create_agenda/{id}','CoachController@storeAgendaView');
         Route::get('/profile/rapport','ReportController@GetCoachReports');
