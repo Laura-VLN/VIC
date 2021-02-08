@@ -37,26 +37,26 @@ class CoachController extends Controller
         $iscoach = (Auth::user()->role == 1) ? true : false;
         $issponsor = (Auth::user()->role == 2) ? true : false;
         $isAdmin = (Auth::user()->role == 3) ? true : false;
-        $users = [];
+        $youngs = [];
         if($iscoach || $isAdmin){
-            $users = DB::table('users')
+            $youngs = DB::table('users')
             ->join('coaches_users', 'users.id', '=', 'coaches_users.user_id')
             ->where('coach_id', Auth::user()->id)
             ->get();
         };
-        if($issponsor || $isAdmin)$users = User::where('sponsor_id',Auth::user()->id)->take(1)->get();
-        if(sizeof($users) == 0){
+        if($issponsor || $isAdmin)$youngs = User::where('sponsor_id',Auth::user()->id)->take(1)->get();
+        if(sizeof($youngs) == 0){
             return view('user.young.young_show')->with('haveYoung',false);
         }else{
-            return view('user.young.young_show',compact('users'))->with('haveYoung',true);
+            return view('user.young.young_show',compact('youngs'))->with('haveYoung',true);
         }
     }
 
     public function showyoung($id){
-        $user = User::findOrFail($id);
+        $young = User::findOrFail($id);
         $document = Document::where('user_id',$user->id);
         $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
-        return view('user.young.young',compact('user', 'document', 'agenda'));
+        return view('user.young.young',compact('young', 'document', 'agenda'));
     }
 
     public function addAgenda(Request $request){

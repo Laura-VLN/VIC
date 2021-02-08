@@ -7,12 +7,10 @@
         </div>  
     @else
         <title-sec theme="coach">Mes Coachs</title-sec>
-        <div class="row w-100 m-0">
+        <div class="row w-100 ml-4">
             @foreach ($coachs as $coach)
-            <a href="/coach/{{ $coach->id }}">
-            <profile-card v-bind:user="{{  json_encode($coach) }}"></profile-card>
-            </a>
-        @endforeach
+                <profile-card v-bind:user="{{  json_encode($coach) }}" path="/coach/" theme="coach"></profile-card>
+            @endforeach
         </div>
     @endif
 @endsection
