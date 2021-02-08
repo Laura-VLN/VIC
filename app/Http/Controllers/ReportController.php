@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Report;
+use App\Reports;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +33,7 @@ class ReportController extends Controller
              
              $path = $request->file('report')->storeAs('reports', $reportName, 'public');
              $path = "storage/".$path;
-             $report = Report::create([
+             $report = Reports::create([
                  'title' => $validrequest['title'],
                  'link' => $path,
                  'author_id' => Auth::user()->id
@@ -51,13 +51,13 @@ class ReportController extends Controller
       */
      public function GetCoachReports(Request $request)
      {
-        $reports = Report::where('author_id',Auth::user()->id)->get();
+        $reports = Reports::where('author_id',Auth::user()->id)->get();
          return view('reports.reports',compact('reports'));
      }
 
      public function get(Request $request, $id)
     {
-        $report = Report::findOrFail($id);
+        $report = Reports::findOrFail($id);
         return response()->download(public_path($report['link']));
     }
 }
