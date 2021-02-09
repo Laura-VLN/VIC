@@ -54,8 +54,8 @@ class CoachController extends Controller
 
     public function showyoung($id){
         $young = User::findOrFail($id);
-        $document = Document::where('user_id',$user->id);
-        $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
+        $document = Document::where('user_id',$young->id);
+        $agenda = Agenda::where('user_id',$young->id)->where('follower_id',Auth::user()->id)->get();
         return view('user.young.young',compact('young', 'document', 'agenda'));
     }
 

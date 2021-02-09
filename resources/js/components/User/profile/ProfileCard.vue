@@ -1,11 +1,11 @@
 <template>
     <div class="d-flex flex-row col-12 col-md-6 profile-card">
-        <a v-bind:href="path+'{{user.id}}'" v-bind:class="theme">
+        <a v-bind:href="path+user.id">
             <div class="mx-auto d-flex flex-row">
                 <i v-bind:class="'fas fa-user '+theme"></i>
                 <div class="d-flex flex-column justify-content-between informations">
-                    <h5>{{user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)}} {{user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1)}}</h5>
-                    <ul>
+                    <h5 v-bind:class="theme">{{user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)}} {{user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1)}}</h5>
+                    <ul v-if="user.role !== 0">
                         <li>{{user.birth_date}}</li>
                         <li>{{user.location}}</li>
                     </ul>
@@ -36,6 +36,7 @@
         padding:15px;
         border: 2px solid black;
         box-shadow: -10px 10px black;
+        transition: 0.3s;
     }
     .informations{
         width:100%;
@@ -65,6 +66,20 @@ a{
     text-decoration: none;
     &:hover {
         text-decoration: none;
+        color: $black;
+        i {
+            box-shadow: 0px 0px rgba(255, 255, 255, 0);
+        }
+        h5.coach {
+            border-bottom:2px solid $bleu;
+        }
+        h5.parrain {
+            border-bottom:2px solid $turquoise;
+        }
+        h5.young {
+            border-bottom:2px solid $green;
+        }
+
     }
     &:focus {
         text-decoration: none;
@@ -77,15 +92,6 @@ i.parrain {
     color : $turquoise;
 }
 i.young {
-    color : $green;
-}
-.coach:hover {
-    color : $bleu;
-}
-.parrain:hover {
-    color : $turquoise;
-}
-.young:hover {
     color : $green;
 }
 </style>

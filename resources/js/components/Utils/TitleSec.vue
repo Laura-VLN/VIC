@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="'ml-5 mt-3 mb-5 d-flex flex-row title '+theme">
+    <div v-bind:class="'ml-5 mt-3 mb-3 d-flex flex-row title '+theme">
         <h4><slot></slot></h4><div class="ml-3 mr-5 d-flex"></div>
     </div>
 </template>
