@@ -16,12 +16,12 @@ class CoachController extends Controller
                     join('coaches_users', 'users.id', '=', 'coaches_users.coach_id')
                     ->where('user_id', Auth::user()->id)
                     ->get();
-        if($coachs == null){
+        if(empty($coachs[0])){
             return view('user.coach.coach')->with('hascoaches', false);
         }else{
-            $documents = Document::where('user_id',1)->get();
-            $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',1)->get();
-            return view('user.coach.coach',compact('coachs','documents','agenda'))->with('hascoaches', true);
+            //$documents = Document::where('user_id',1)->get();
+            //$agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',1)->get();
+            return view('user.coach.coach',compact('coachs'/* ,'documents','agenda' */))->with('hascoaches', true);
         }
     }
 
