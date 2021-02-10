@@ -1,10 +1,9 @@
 @extends('layouts.base')
 @section('content')
-    @if($haveYoung)
         <title-sec theme="formation">Mon Jeune</title-sec>
         <div class="row w-100 m-0">
-            <profile-card v-bind:user="{{  json_encode($user) }}"></profile-card>
-            <profile-document v-bind:documents="{{  json_encode($document) }}" cpas="{{$user->cpas_status}}"></profile-document>
+            <profile-card v-bind:young="{{  json_encode($young) }}"></profile-card>
+            <profile-document v-bind:documents="{{  json_encode($document) }}" cpas="{{$young->cpas_status}}"></profile-document>
         </div>
         <div class="row d-flex">
             {{-- recement --}}
@@ -19,13 +18,9 @@
             </div>
             {{-- Agenda --}}
             <div class="col-12 col-md-6 d-flex flex-column pt-3 profile-vr pr-0">
-                <h4 class="ml-5 mr-auto px-1 title-profile pb-1 mb-3">Agenda <a href="/young/create_agenda/{{$user->id}}" class="text-dark"><i class="fas fa-plus"></i></a></h4>
+                <h4 class="ml-5 mr-auto px-1 title-profile pb-1 mb-3">Agenda <a href="/young/create_agenda/{{$young->id}}" class="text-dark"><i class="fas fa-plus"></i></a></h4>
                 {{-- VUE Component --}}
                 <agenda v-bind:agenda="{{ json_encode($agenda) }}"></agenda>
             </div>
         </div>
-    @else
-        <h3 style="margin-left:50px;margin-top:30px;">Aucun jeune assigné</h3>
-        <small style="margin-left:50px;">Si vous pensez avoir un jeune assigné, contactez l'administration</small>
-    @endif
 @endsection

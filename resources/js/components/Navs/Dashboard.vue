@@ -4,7 +4,7 @@
         <li class="Mon jeune"> 
             <a href="/young" class="nav-link d-flex flex-column">
                 <i class="fas fa-child"></i>
-                <span class="title-custom mt-1 text-light">Mon jeune</span>
+                <span class="title-custom mt-1 text-light">Mes jeunes</span>
             </a>
         </li>
     </ul>
@@ -24,13 +24,13 @@
         <li class="nav-item">
             <a href="/parrain" class="nav-link d-flex flex-column">
                 <span class="fas fa-handshake"></span>
-                <span class="title-custom mt-1 text-light">Mon parrain</span>
+                <span class="title-custom mt-1 text-light">Mes parrains</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="/coach" class="nav-link d-flex flex-column">
                 <span class="fas fa-file-signature"></span>
-                <span class="title-custom mt-1 text-light">Mon coach</span>
+                <span class="title-custom mt-1 text-light">Mes coachs</span>
             </a>
         </li>
         <li class="nav-item">

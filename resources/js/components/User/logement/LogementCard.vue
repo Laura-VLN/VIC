@@ -79,10 +79,10 @@
                 bottom:0; 
                 z-index:666; 
                 width:100%; 
-                height:38px; 
+                height:28px; 
                 background-color:transparent; 
                 .btn{
-                    height:38px;
+                    height:28px;
                 }
             }
         }

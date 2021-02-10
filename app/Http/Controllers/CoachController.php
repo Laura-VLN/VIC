@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\User;
-use App\Document;
-use App\Agenda;
 use Auth;
+use App\User;
+use App\Agenda;
+use App\Document;
 
 class CoachController extends Controller
 {
@@ -17,39 +17,50 @@ class CoachController extends Controller
                     ->where('user_id', Auth::user()->id)
                     ->get();
         if(empty($coachs[0])){
-            return view('user.coach.coach')->with('hascoaches', false);
+            return view('user.coach.coach_show')->with('hascoaches', null);
         }else{
-            //$documents = Document::where('user_id',1)->get();
-            //$agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',1)->get();
-            return view('user.coach.coach',compact('coachs'/* ,'documents','agenda' */))->with('hascoaches', true);
+            // $documents = Document::where('user_id',$coachId)->get();
+            // $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$coachId)->get();
+            return view('user.coach.coach_show',compact('coachs'))->with('hascoaches', true);
         }
     }
 
-    public function showyoung(){
+    public function showcoach($id){
+        $coach = User::findOrFail($id);
+        // $document = Document::where('user_id',$user->id);
+        // $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
+        return view('user.coach.coach',compact('coach'));
+    }
+    
+    public function showyoungs(){
         $iscoach = (Auth::user()->role == 1) ? true : false;
         $issponsor = (Auth::user()->role == 2) ? true : false;
         $isAdmin = (Auth::user()->role == 3) ? true : false;
-        $user = [];
+        $youngs = [];
         if($iscoach || $isAdmin){
-            $users = User::
-            join('coaches_users', 'users.id', '=', 'coaches_users.user_id')
+            $youngs = DB::table('users')
+            ->join('coaches_users', 'users.id', '=', 'coaches_users.user_id')
             ->where('coach_id', Auth::user()->id)
             ->get();
-        }
+        };
         if($issponsor || $isAdmin){
-            $users = User::
+            $youngs = User::
             join('sponsors_users', 'users.id', '=', 'sponsors_users.user_id')
             ->where('sponsor_id', Auth::user()->id)
             ->get();
         }
-        if(sizeof($user) == 0){
-            return view('user.young.young')->with('haveYoung',false);
+        if(sizeof($youngs) == 0){
+            return view('user.young.young_show')->with('haveYoung',false);
         }else{
-            $user = $user[0];
-            $document = Document::where('user_id',$user->id);
-            $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
-            return view('user.young.young',compact('user','document','agenda'))->with('haveYoung',true);
+            return view('user.young.young_show',compact('youngs'))->with('haveYoung',true);
         }
+    }
+
+    public function showyoung($id){
+        $young = User::findOrFail($id);
+        $document = Document::where('user_id',$young->id);
+        $agenda = Agenda::where('user_id',$young->id)->where('follower_id',Auth::user()->id)->get();
+        return view('user.young.young',compact('young', 'document', 'agenda'));
     }
 
     public function addAgenda(Request $request){

@@ -4,7 +4,7 @@
                 <div class="fix-flex-navbar"></div>
                 <div class="navbar-title fix-flex-navbar mr-auto">
                     <a class="navbar-brand font-weight-bold mx-0" v-bind:href="home">
-                        <span class="text-success">SRPE</span> - DASHBOARD
+                        <span class="text-success">SRPE</span> - ACCUEIL
                     </a>
                 </div>
                 <div class="navbar-dropdown fix-flex-navbar ml-auto d-flex justify-content-end">

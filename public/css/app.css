@@ -11627,3 +11627,13 @@ body h6 {
   border-left: 1.5px solid black;
 }
 
+.profil-card {
+  text-decoration: none;
+  color: black;
+}
+
+.profil-card:hover {
+  text-decoration: none;
+  color: #015579;
+}
+
