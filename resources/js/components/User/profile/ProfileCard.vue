@@ -19,6 +19,8 @@
     export default {
         props:['user', 'path', 'theme','uid'],
         mounted() {
+            if(!this.path) this.path =""
+            if(!this.uid) this.uid =""
             console.log('Component mounted. nav')
         }
     }

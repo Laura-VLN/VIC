@@ -1,7 +1,7 @@
 @extends('layouts.base')
 @section('content')
 
-        <title-sec theme="coach">Mon Parrain</title-sec>
+        <title-sec theme="coach">Mon Coach</title-sec>
         <div class="row w-100 m-0">
             <profile-card v-bind:user="{{  json_encode($coach) }}"></profile-card>
             {{-- <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($documents) }}" cpas="{{$coach->cpas_status}}"></profile-document> --}}
