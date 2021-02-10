@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-row col-12 col-md-6 profile-card">
-        <a v-bind:href="path+user.id">
+        <a v-bind:href="path+uid">
             <div class="mx-auto d-flex flex-row">
                 <i v-bind:class="'fas fa-user '+theme"></i>
                 <div class="d-flex flex-column justify-content-between informations">
@@ -17,7 +17,7 @@
 </template>
 <script>
     export default {
-        props:['user', 'path', 'theme'],
+        props:['user', 'path', 'theme','uid'],
         mounted() {
             console.log('Component mounted. nav')
         }
