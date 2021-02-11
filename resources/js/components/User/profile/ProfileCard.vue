@@ -17,12 +17,12 @@
 </template>
 <script>
     export default {
-        props:['user', 'path', 'theme','uid'],
+        props:['user', 'path', 'theme', 'uid'],
         mounted() {
-            if(!this.path) this.path =""
-            if(!this.uid) this.uid =""
+            /* if(!this.path) this.path =""
+            if(!this.uid) this.uid ="" */
             console.log('Component mounted. nav')
-        }
+        },
     }
 </script>
 <style scoped lang="scss">

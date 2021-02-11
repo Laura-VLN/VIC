@@ -21,7 +21,7 @@
     export default {
         props: ["fn","ln","lo","lot","role"],
         mounted() {
-            console.log(this._props);
+            //console.log(this._props);
         }
     }
 </script>

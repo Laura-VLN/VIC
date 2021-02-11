@@ -3,7 +3,7 @@
         <title-sec theme="formation">Mon Jeune</title-sec>
         <div class="row w-100 m-0">
             <profile-card v-bind:young="{{  json_encode($young) }}"></profile-card>
-            <profile-document v-bind:documents="{{  json_encode($document) }}" cpas="{{$young->cpas_status}}"></profile-document>
+            <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($document) }}" cpas="{{$young->cpas_status}}"></profile-document>
         </div>
         <div class="row d-flex">
             {{-- recement --}}

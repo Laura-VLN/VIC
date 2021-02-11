@@ -19,17 +19,15 @@ class CoachController extends Controller
         if(empty($coachs[0])){
             return view('user.coach.coach_show')->with('hascoaches', null);
         }else{
-            // $documents = Document::where('user_id',$coachId)->get();
-            // $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$coachId)->get();
             return view('user.coach.coach_show',compact('coachs'))->with('hascoaches', true);
         }
     }
 
     public function showcoach($id){
         $coach = User::findOrFail($id);
-        // $document = Document::where('user_id',$user->id);
-        // $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
-        return view('user.coach.coach',compact('coach'));
+        $documents = Document::where('user_id',$coach->id)->get();
+        $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$coach->id)->get();
+        return view('user.coach.coach',compact('coach','documents','agenda'));
     }
     
     public function showyoungs(){
@@ -58,7 +56,7 @@ class CoachController extends Controller
 
     public function showyoung($id){
         $young = User::findOrFail($id);
-        $document = Document::where('user_id',$young->id);
+        $document = Document::where('user_id',$young->id)->get();
         $agenda = Agenda::where('user_id',$young->id)->where('follower_id',Auth::user()->id)->get();
         return view('user.young.young',compact('young', 'document', 'agenda'));
     }
@@ -87,10 +85,10 @@ class CoachController extends Controller
             'hour'=> $validrequest['hour']
         ]);
 
-        $user = User::findOrFail($validrequest['dest']);
+        $young = User::findOrFail($validrequest['dest']);
         $document = Document::where('user_id',$validrequest['dest']);
         $agenda = Agenda::where('user_id',$validrequest['dest'])->where('follower_id', Auth::user()->id)->get();
-        return view('user.young.young',compact('user','document','agenda'))->with('haveYoung',true);
+        return view('user.young.young',compact('young','document','agenda'))->with('haveYoung',true);
     }
 
     public function storeAgendaView($id){

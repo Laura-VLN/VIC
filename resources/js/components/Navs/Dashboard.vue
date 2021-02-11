@@ -55,7 +55,7 @@
     export default {
         props: ["connected","iscoach"],
         mounted() {
-            console.log(this._props.iscoach +" teste")
+            //console.log(this._props.iscoach +" teste")
 
         }
     }

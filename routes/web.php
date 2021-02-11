@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth'],function(){
         Route::post('/job/{page}','JobController@filter');
         Route::post('/logement/{page}','HousingController@filter');
         Route::post('/formations/{page}','FormationController@filter');
-        Route::post('/young','CoachController@addAgenda');
+        Route::post('/young/{id}','CoachController@addAgenda');
         Route::post('/profile/upload/{id}','DocumentController@store');
         Route::post('/profile/download','DocumentController@get');
         Route::post('/report/upload','ReportController@store')->name('upload.uploadReport');

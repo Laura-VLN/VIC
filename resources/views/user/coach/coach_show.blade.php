@@ -9,7 +9,7 @@
         <title-sec theme="coach">Mes Coachs</title-sec>
         <div class="row w-100 ml-4">
             @foreach ($coachs as $coach)
-                <profile-card v-bind:uid="{{ $coach->coach_id }}" v-bind:user="{{  json_encode($coach) }}" path="/coach/" theme="coach"></profile-card>
+                <profile-card v-bind:uid="{{ $coach->coach_id }}" v-bind:user="{{  json_encode($coach) }}" v-bind:path="/coach/" theme="coach"></profile-card>
             @endforeach
         </div>
     @endif

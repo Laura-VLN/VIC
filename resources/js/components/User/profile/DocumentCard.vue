@@ -5,7 +5,7 @@
                 <h5>Documents utiles </h5> <a :href="'/profile/upload/'+userid" v-if="canadd == true"><i class="fas fa-file-upload"></i></a>
             </div>
             <ul>
-                <li v-for="document in documents">
+                <li v-bind:key="index" v-for="(document,index) in documents">
                     <form v-bind:action="'/profile/download'" method="post">
                     <button type="submit"><i  class="fas fa-download"></i></button> {{document.title}}
                     <input type="hidden" name="link" :value="document.link">

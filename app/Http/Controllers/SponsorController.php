@@ -26,8 +26,8 @@ class SponsorController extends Controller
 
     public function showsponsor($id){
         $sponsor = User::findOrFail($id);
-        // $document = Document::where('user_id',$user->id);
-        // $agenda = Agenda::where('user_id',$user->id)->where('follower_id',Auth::user()->id)->get();
-        return view('user.sponsor.sponsor',compact('sponsor'));
+        $documents = Document::where('user_id',$sponsor->id)->get();
+        $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$sponsor->id)->get();
+        return view('user.sponsor.sponsor',compact('sponsor','documents','agenda'));
     }
 }
