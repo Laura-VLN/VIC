@@ -11,7 +11,7 @@ use App\HousingGallery;
 use App\Agenda;
 use App\Coaches_users;
 use App\Sponsors_users;
-use App\Report;
+use App\Reports;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
