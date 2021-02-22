@@ -1,9 +1,8 @@
 @extends('layouts.base')
 @section('content')
-<reports-table></reports-table>
 
-<!-- @foreach($reports as $report)
-<p>{{$report->content}}</p>
-@endforeach -->
+    @foreach($reports as $report)
+    <reports-table v-bind:report="{{  json_encode($report) }}"></reports-table>
+    @endforeach
 
 @endsection
