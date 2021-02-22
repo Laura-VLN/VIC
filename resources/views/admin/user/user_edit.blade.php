@@ -1,3 +1,4 @@
+<!-- compact('user','coachs','sponsors','coaches_user','sponsors_user') -->
 @extends('layouts.baseadmin')
 @section('content')
     <h1>Editer un Utilisateur</h1>
@@ -57,7 +58,7 @@
                 @enderror
             </user-input-text>
             {{--  cpas status  --}}
-            <user-input-text required="false" id="cpas_status" type="text" label="Status CPAS" value="{{ $user->cpas_status }}" error="@error('cpas_status') is-invalid @enderror">
+            <user-input-text required="false" id="cpas_status" type="text" label="Statut CPAS" value="{{ $user->cpas_status }}" error="@error('cpas_status') is-invalid @enderror">
                 @error('cpas_status')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -72,37 +73,38 @@
                         </span>
                 @enderror
             </user-input-text>
+
             {{--  coach  --}}
-            <user-input-dropdown value="{{ $user->coach_id }}" required="false" id="coach_id" label="Coach" error="@error('coach_id') is-invalid @enderror">
-                <option value='' @if($user->coach_id == null)selected @endif>Aucun</option>
-                @foreach ($coachs as $coach)
-                    <option value={{$coach->id}} @if($user->coach_id == $coach->id)selected @endif>{{$coach->first_name}}</option>
-                @endforeach
-                @error('coach_id')
-                    <span class="invalid-feedback" role="alert" v-slot:error>
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </user-input-dropdown>
+                <user-input-slimselect label="Coach" id="coaches" name="coaches[]" error="@error('coaches') is-invalid @enderror">
+                    @foreach ($coachs as $coach)
+                        <option value={{ $coach->id}} @if(array_search($coach->id, $coaches_user) !== false)selected @endif >{{$coach->first_name}} {{$coach->last_name}}</option>
+                    @endforeach
+                    @error('coaches')
+                        <span class="invalid-feedback" role="alert" v-slot:error>
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </user-input-slimselect> 
+            
             {{--  sponsor  --}}
-            <user-input-dropdown value="{{ $user->sponsor_id }}" required="false" id="sponsor_id" label="Parrain" error="@error('sponsor_id') is-invalid @enderror">
-                <option value='' @if($user->sponsor_id == null)selected @endif>Aucun</option>
-                @foreach ($sponsors as $sponsor)
-                    <option value={{$sponsor->id}} @if($user->sponsor_id == $sponsor->id)selected @endif>{{$sponsor->first_name}}</option>
-                @endforeach
-                @error('sponsor_id')
-                    <span class="invalid-feedback" role="alert" v-slot:error>
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </user-input-dropdown>
+            <user-input-slimselect label="Parrain" id="sponsors" name="sponsors[]" error="@error('sponsors') is-invalid @enderror">
+                    @foreach ($sponsors as $sponsor)
+                        <option value={{ $sponsor->id}} @if(array_search($sponsor->id, $sponsors_user) !== false)selected @endif >{{$sponsor->first_name}} {{$sponsor->last_name}}</option>
+                    @endforeach
+                    @error('sponsors')
+                        <span class="invalid-feedback" role="alert" v-slot:error>
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+            </user-input-slimselect>
+
             <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-2">
                     <button type="submit" class="btn btn-primary">
                         {{ __('Enregistrer les modifications') }}
                     </button>
                     @if($updated == true)
-                        <span class="text-success">Les modifications ont bien été enregistrée !</span>
+                        <span class="text-success">Les modifications ont bien été enregistrées !</span>
                     @endif
                 </div>
             </div>

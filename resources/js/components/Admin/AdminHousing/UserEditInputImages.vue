@@ -7,7 +7,7 @@
                 <label class="custom-file-label" for="inputGroupFile01">Choisir une image</label>
             </div>
             <div class="d-flex flex-row row imgbox">
-                <div v-for="image in images" class="col-md-3">
+                <div v-for="(image, index) in images" :key="index" class="col-md-3">
                     <form method="POST" class="formbox" v-bind:action="'/admin/logement/delimg/'+image.id">
                         <img class="img-fluid" v-bind:src="asset + image.img_link" alt="photo de logement">
                         <input type="hidden" name="id" v-bind:value="id">
