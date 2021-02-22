@@ -9,7 +9,9 @@ use App\Job;
 use App\Housing;
 use App\HousingGallery;
 use App\Agenda;
-use App\Reports;
+use App\Coaches_users;
+use App\Sponsors_users;
+use App\Report;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -331,7 +333,12 @@ class AdminController extends Controller
     public function user($page)
     {
         $users = User::skip((int)($page-1)*20)->take(20)->get();
-        return view('admin.user.user',compact('users'));
+        $coaches_users = Coaches_users::get();
+        $sponsors_users = Sponsors_users::get();
+        $coachs = User::where('role',1)->get();
+        $sponsors = User::where('role',2)->get();
+
+        return view('admin.user.user',compact('users','coaches_users','sponsors_users','coachs','sponsors'));
     }
 
     public function userCreateView()
@@ -344,7 +351,22 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
         $coachs = User::where('role',1)->get();
         $sponsors = User::where('role',2)->get();
-        return view('admin.user.user_edit',compact('user','coachs','sponsors'))->with('updated',false);
+        $coaches_user = Coaches_users::where('user_id', $id)->get('coach_id')->toArray(); // Récupère coach_id assosié au user
+        $sponsors_user = Sponsors_users::where('user_id', $id)->get('sponsor_id')->toArray(); // Récupère sponsor_id assicié au user
+
+        $temp = [];
+        foreach ($coaches_user as $key => $val) {
+            array_push($temp, $val['coach_id']);
+        }
+        $coaches_user = $temp;
+
+        $temp = [];
+        foreach ($sponsors_user as $key => $val) {
+            array_push($temp, $val['sponsor_id']);
+        }
+        $sponsors_user = $temp;
+    
+        return view('admin.user.user_edit',compact('user','coachs','sponsors','coaches_user','sponsors_user'))->with('updated',false);
     }
 
     public function userEdit(Request $request, $id)
@@ -358,9 +380,11 @@ class AdminController extends Controller
             'birth_date' => ['nullable'],
             'cpas_status' => ['nullable','max:255'],
             'description' => ['nullable'],
-            'sponsor_id' => ['nullable'],
-            'coach_id' => ['nullable']
+            'coaches' => ['nullable'],
+            'sponsors' => ['nullable'],
         ]);
+
+        //dd($validRequest['coaches']);
         
         $user = User::find($id);
         $user->first_name = $validRequest['first_name'];
@@ -371,13 +395,74 @@ class AdminController extends Controller
         $user->birth_date = $validRequest['birth_date'];
         $user->cpas_status = $validRequest['cpas_status'];
         $user->description = $validRequest['description'];
-        $user->sponsor_id = $validRequest['sponsor_id'];
-        $user->coach_id = $validRequest['coach_id'];
 
         $user->save();
+
+        // update relation coach -- user
+        if(isset($validRequest['coaches'])){
+            $selectedCoaches = $validRequest['coaches']; //coaches envoyé par le formulaire doit être un array d'Ids
+            $currentDbCoaches = Coaches_users::where('user_id', $id)->pluck('coach_id')->toArray(); //récupère une collection (array) de coach_id appartenant à user_id
+
+            $coachesToDelete = array_diff($currentDbCoaches, $selectedCoaches);
+            $coachesToAdd = array_diff($selectedCoaches, $currentDbCoaches);
+
+            Coaches_users::where('user_id', $id)->whereIn('coach_id',$coachesToDelete)->delete();
+
+            foreach($coachesToAdd as $coachToAdd){
+                Coaches_users::create([
+                    'coach_id' => $coachToAdd,
+                    'user_id' => $id
+                ]);
+            }
+        }
+        else{
+            Coaches_users::where('user_id', $id)->delete();
+        }
+        
+
+        // update relation sponsor -- user
+        if(isset($validRequest['sponsors'])){
+            $selectedSponsors = $validRequest['sponsors']; //sponsors envoyé par le formulaire doit être un array d'Ids
+            $currentDbSponsors = Sponsors_users::where('user_id', $id)->pluck('sponsor_id')->toArray(); //récupère une collection (array) de sponsor_id appartenant à user_id
+
+            $sponsorsToDelete = array_diff($currentDbSponsors, $selectedSponsors);
+            $sponsorsToAdd = array_diff($selectedSponsors, $currentDbSponsors);
+
+
+            
+            if($sponsorsToDelete != null){
+                Sponsors_users::where('user_id', $id)->whereIn('sponsor_id',$sponsorsToDelete)->delete();
+            }
+            
+            foreach($sponsorsToAdd as $sponsorToAdd){
+                Sponsors_users::create([
+                    'sponsor_id' => $sponsorToAdd,
+                    'user_id' => $id
+                ]);
+            }
+        }
+        else{
+            Sponsors_users::where('user_id', $id)->delete();
+        }
+
         $coachs = User::where('role',1)->get();
         $sponsors = User::where('role',2)->get();
-        return view('admin.user.user_edit',compact('user','coachs','sponsors'))->with('updated',true);
+        $coaches_user = Coaches_users::where('user_id', $id)->get()->toArray(); // Récupère la paire coach_id -- user_id
+        $sponsors_user = Sponsors_users::where('user_id', $id)->get()->toArray(); // Récupère la paire sponsor_id -- user_id
+
+        $temp = [];
+        foreach ($coaches_user as $key => $val) {
+            array_push($temp, $val['coach_id']);
+        }
+        $coaches_user = $temp;
+        
+        $temp = [];
+        foreach ($sponsors_user as $key => $val) {
+            array_push($temp, $val['sponsor_id']);
+        }
+        $sponsors_user = $temp;
+        
+        return view('admin.user.user_edit',compact('user','coachs','sponsors','coaches_user','sponsors_user'))->with('updated',true);
     }
 
     public function userCreate(Request $request)
@@ -410,6 +495,8 @@ class AdminController extends Controller
     public function userDelete(Request $request, $id){
         $user = User::find($id);
         $user->delete();
+        Coaches_users::where('user_id', $id)->delete();
+        Sponsors_users::where('user_id', $id)->delete();
 
         return redirect('/admin/user/list/1');
     }
