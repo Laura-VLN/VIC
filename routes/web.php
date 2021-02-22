@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::group(['middleware' => 'auth'],function(){
     Route::group(['middleware' => 'firstlogin'],function(){
@@ -27,11 +27,13 @@ Route::group(['middleware' => 'auth'],function(){
         Route::get('/logement/{page}','HousingController@index');
         Route::get('/logement/show/{id}','HousingController@show');
         Route::get('/parrain','SponsorController@index');
+        Route::get('/parrain/{id}','SponsorController@showsponsor');
         Route::get('/coach','CoachController@index');
+        Route::get('/coach/{id}','CoachController@showcoach');
         Route::get('/formations/{page}','FormationController@index');
         Route::get('/formations/show/{id}','FormationController@show');
-        Route::get('/young','CoachController@showyoungs');
         Route::get('/young/{id}','CoachController@showyoung');
+        Route::get('/young','CoachController@showyoungs');
         Route::get('/profile/upload/{id}','DocumentController@index');
         Route::get('/young/create_agenda/{id}','CoachController@storeAgendaView');
         Route::get('/profile/rapport','ReportController@GetCoachReports');
@@ -40,7 +42,7 @@ Route::group(['middleware' => 'auth'],function(){
         Route::post('/job/{page}','JobController@filter');
         Route::post('/logement/{page}','HousingController@filter');
         Route::post('/formations/{page}','FormationController@filter');
-        Route::post('/young','CoachController@addAgenda');
+        Route::post('/young/{id}','CoachController@addAgenda');
         Route::post('/profile/upload/{id}','DocumentController@store');
         Route::post('/profile/download','DocumentController@get');
         Route::post('/report/upload','ReportController@store')->name('upload.uploadReport');

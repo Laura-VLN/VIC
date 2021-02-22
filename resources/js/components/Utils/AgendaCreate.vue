@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        <form action="/young" method="post" class="row mx-2 my-5 text-left">
+        <form v-bind:action="/young/+youngid" method="post" class="row mx-2 my-5 text-left">
             <label for="date" class="col-3 my-2">Date</label>
             <input type="date" name="time" id="date" class="col-9 my-2" required><br>
             <label for="heure" class="col-3 my-2">Heure</label>
             <input type="time" name="hour" id="heure" class="col-9 my-2" required><br>
             <label for="titre" class="col-3 my-2">Titre</label>
             <input type="text" name="title" id="titre" class="col-9 my-2" required><br>
-            <input type="hidden" name="dest" :value="youngid.id">
+            <input type="hidden" name="dest" :value="youngid">
             <label for="location" class="col-3 my-2">Adresse</label>
             <input type="text" name="location" class="col-9 my-2" required><br>
             <label for="description" class="col-3 my-2">Description</label>

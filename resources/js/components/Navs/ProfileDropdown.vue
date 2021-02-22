@@ -7,7 +7,7 @@
     
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="/admin/user/list/1" v-if="role == 3">Panel admin</a>
-                <a class="dropdown-item" href="/profile">Profile</a>
+                <a class="dropdown-item" href="/profile">Profil</a>
                 <a class="dropdown-item" v-bind:href="lo">
                     {{lot}}
                 </a>
@@ -21,7 +21,7 @@
     export default {
         props: ["fn","ln","lo","lot","role"],
         mounted() {
-            console.log(this._props);
+            //console.log(this._props);
         }
     }
 </script>

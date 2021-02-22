@@ -1,14 +1,8 @@
 @extends('layouts.base')
 @section('content')
-    @if ($sponsorId == null)
-        <div class="container mt-5">
-            <h3>Aucun parrain définit</h3>
-            <p>Veuillez contacter un administrateur si vous pensez avoir un parrain</p>
-        </div>  
-    @else
         <title-sec theme="sponsor">Mon Parrain</title-sec>
         <div class="row w-100 m-0">
-            <profile-card v-bind:user="{{  json_encode($sponsor) }}"></profile-card>
+            <profile-card v-bind:user="{{  json_encode($sponsor) }}" v-bind:uid="{{ $sponsor->id }}" v-bind:path="/parrain/"></profile-card>
             <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($documents) }}" cpas="{{$sponsor->cpas_status}}"></profile-document>
         </div>
         <hr class="profile-hr">
@@ -25,5 +19,4 @@
                 <agenda v-bind:agenda="{{ json_encode($agenda) }}"></agenda>
             </div>
         </div>
-    @endif
 @endsection

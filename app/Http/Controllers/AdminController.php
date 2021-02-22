@@ -129,7 +129,7 @@ class AdminController extends Controller
         return view('admin.housing.housing_edit',compact('logement','images'))->with('updated',true);
         
     }
-
+//////////////// ????????????????
     public function logementImage(Request $request,$id){
         $image = HousingGallery::find($id);
         $image->delete();
@@ -495,8 +495,8 @@ class AdminController extends Controller
     public function userDelete(Request $request, $id){
         $user = User::find($id);
         $user->delete();
-        Coaches_users::where('user_id', $id)->delete();
-        Sponsors_users::where('user_id', $id)->delete();
+        Coaches_users::where('user_id', $id)->orWhere('coach_id', $id)->delete();
+        Sponsors_users::where('user_id', $id)->orWhere('sponsor_id', $id)->delete();
 
         return redirect('/admin/user/list/1');
     }

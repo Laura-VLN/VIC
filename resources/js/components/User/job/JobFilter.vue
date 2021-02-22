@@ -36,8 +36,9 @@ export default {
     }
     .btn{
         border: 2px solid white;
-        background-color: $black;
+        background-color: $orange;
         color:white;
+        height: 28px;
         &:hover{
             border: 2px solid $orange;
             background-color: white;
