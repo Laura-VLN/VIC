@@ -16,6 +16,8 @@ class ReportController extends Controller
       * @param  \Illuminate\Http\Request  $request
       * @return \Illuminate\Http\Response
       */
+     /* 
+     Download file version of report
      public function store(Request $request)
      {
         
@@ -39,6 +41,23 @@ class ReportController extends Controller
                  'author_id' => Auth::user()->id
              ]);
          }
+         
+         return redirect('/young');
+     } */
+
+     public function store(Request $request)
+     {
+         
+         $validrequest = $request->validate([
+             'title' => ['string'],
+             'report' => ['string']
+         ]);
+             
+             $report = Reports::create([
+                 'title' => $validrequest['title'],
+                 'content' => $validrequest['report'],
+                 'author_id' => Auth::user()->id
+             ]);
          
          return redirect('/young');
      }

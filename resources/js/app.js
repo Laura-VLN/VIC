@@ -104,7 +104,7 @@ Vue.component(
 );
 Vue.component(
     "reports-table",
-    require("./components/reports/reportsTable.vue").default
+    require("./components/Reports/ReportsTable.vue").default
 );
 
 Vue.component(
