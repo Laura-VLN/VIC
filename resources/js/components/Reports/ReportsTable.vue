@@ -15,5 +15,5 @@ export default {
 </script>
 <style scoped lang="scss">
 //changer le chemin selon la position du component
-@import "../../sass/variables";
+@import "../../../sass/variables";
 </style>

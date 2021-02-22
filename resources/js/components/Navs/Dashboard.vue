@@ -67,7 +67,7 @@
         color:$orange;
     }
     .fa-home{
-        color:$violet;
+        color:$purple;
     }
     .fa-handshake{
         color:$turquoise;
