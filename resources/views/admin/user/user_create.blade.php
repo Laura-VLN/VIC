@@ -60,7 +60,7 @@
                         {{ __('Enregistrer') }}
                     </button>
                     @if($updated == true)
-                        <span class="text-success">L'utilisateur à bien été enregistré !</span>
+                        <span class="text-success">L'utilisateur a bien été enregistré !</span>
                     @endif
                 </div>
             </div>

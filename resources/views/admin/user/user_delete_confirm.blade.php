@@ -1,6 +1,6 @@
 @extends('layouts.baseadmin')
 @section('content')
-    <h1>Vous allez Supprimer {{$user->first_name}} {{$user->last_name}}.</h1>
+    <h1>Vous allez supprimer {{$user->first_name}} {{$user->last_name}}.</h1>
     <h3>Voulez-vous continuer ?</h3>
     <div class="confirmDelete">
         <form action="/admin/user/delete/{{$user->id}}" method="post">

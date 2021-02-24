@@ -13,14 +13,12 @@
                     </form>
                 </li>
             </ul>
-            <h5>CPAS</h5>
-            <p>{{cpas}}</p>
         </div>
     </div>
 </template>
 <script>
     export default {
-        props:['documents','cpas','canadd','userid','csrf'],
+        props:['documents','canadd','userid','csrf'],
         mounted() {
             console.log('Component mounted. nav')
         }

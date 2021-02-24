@@ -2,8 +2,8 @@
 @section('content')
         <title-sec theme="formation">Mon Jeune</title-sec>
         <div class="row w-100 m-0">
-            <profile-card v-bind:young="{{  json_encode($young) }}"></profile-card>
-            <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($document) }}" cpas="{{$young->cpas_status}}"></profile-document>
+            <profile-card v-bind:user="{{  json_encode($young) }}"></profile-card>
+            <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($document) }}"></profile-document>
         </div>
         <div class="row d-flex">
             {{-- recement --}}

@@ -8,32 +8,32 @@
             <table id="users">
                 <tr>
                     <th>Action</th>
-                    <th>Id</th>
                     <th @click="sortTable(2)">Prénom</th>
                     <th @click="sortTable(3)">Nom</th>
                     <th>Email</th>
-                    <th>Adresse</th>
-                    <th @click="sortTable(6)">Grade</th>
+                    <th>Téléphone</th>
+                    <th @click="sortTable(6)">Rôle</th>
                     <th>Coachs</th>
                     <th>Parrains</th>
+                    <th>Adresse</th>
                 </tr>
                 <tr v-for="(user, i) in users" v-bind:key="i">
                     <td style="width:200px;"><a v-bind:href="'/admin/user/edit/'+user.id">Modifier</a><a v-bind:href="'/admin/user/delete/'+user.id">Supprimer</a></td>
-                    <td>{{user.id}}</td>
                     <td>{{user.first_name}}</td>
                     <td>{{user.last_name}}</td>
                     <td>{{user.email}}</td>
-                    <td>{{user.location}}</td>
+                    <td>{{user.phone_number}}</td>
                     <td v-if="user.role == 3">Admin</td>
                     <td v-if="user.role == 2">Parrain</td>
                     <td v-if="user.role == 1">Coach</td>
-                    <td v-if="user.role == 0">Utilisateur</td>
+                    <td v-if="user.role == 0">Jeune</td>
                     <td>
                         <div v-for="(coach, index) in getCoachs(user.id)" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+coach.coach_id">{{ returnCoachById(coach.coach_id) }}</a></div>
                     </td>
                     <td>
                         <div v-for="(sponsor, index) in getSponsors(user.id)" v-bind:key="index"><a v-bind:href="'/admin/user/edit/'+sponsor.sponsor_id">{{ returnSponsorById(sponsor.sponsor_id) }}</a></div>
                     </td>
+                    <td>{{user.location}}</td>
                 </tr>
             </table>
         </div>

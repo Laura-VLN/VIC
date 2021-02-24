@@ -5,11 +5,15 @@
                 <i v-bind:class="'fas fa-user '+theme"></i>
                 <div class="d-flex flex-column justify-content-between informations">
                     <h5 v-bind:class="theme">{{user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)}} {{user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1)}}</h5>
-                    <ul v-if="user.role !== 0">
+                    <ul v-if="user.role == 0">
                         <li>{{user.birth_date}}</li>
+                        <li>{{user.phone_number}}</li>
                         <li>{{user.location}}</li>
+                        <li>{{user.email}}</li>
                     </ul>
-                    <p>{{user.email}}</p> 
+                    <ul v-else>
+                        <li>{{user.email}}</li>
+                    </ul> 
                 </div>
             </div>
         </a>

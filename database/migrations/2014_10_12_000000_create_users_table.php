@@ -24,10 +24,10 @@ class CreateUsersTable extends Migration
             $table->boolean('first_login')->default(true);
             $table->date('birth_date')->nullable();
             $table->string('location')->nullable();
-            $table->text('cpas_status')->nullable();
             $table->integer('role')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->string('phone_number');
         });
     }
 

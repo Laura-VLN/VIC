@@ -378,7 +378,7 @@ class AdminController extends Controller
             'role' => ['required','integer'],
             'location' => ['nullable','max:255'],
             'birth_date' => ['nullable'],
-            'cpas_status' => ['nullable','max:255'],
+            'phone_number' => ['nullable','max:255'],
             'description' => ['nullable'],
             'coaches' => ['nullable'],
             'sponsors' => ['nullable'],
@@ -393,7 +393,7 @@ class AdminController extends Controller
         $user->role = $validRequest['role'];
         $user->location = $validRequest['location'];
         $user->birth_date = $validRequest['birth_date'];
-        $user->cpas_status = $validRequest['cpas_status'];
+        $user->phone_number = $validRequest['phone_number'];
         $user->description = $validRequest['description'];
 
         $user->save();

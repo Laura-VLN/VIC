@@ -1,7 +1,7 @@
 <!-- compact('user','coachs','sponsors','coaches_user','sponsors_user') -->
 @extends('layouts.baseadmin')
 @section('content')
-    <h1>Editer un Utilisateur</h1>
+    <h1>Editer un utilisateur</h1>
     <div class="formContainerAdmin ">
         <form method="POST" action="/admin/user/edit/{{$user->id}}">
             @csrf
@@ -31,7 +31,7 @@
             </user-input-text>
             {{--  role  --}}
             <user-input-dropdown value="{{ $user->role }}" required="true" id="role" label="Grade" error="@error('role') is-invalid @enderror">
-                <option value="0" @if($user->role == 0)selected @endif>Utilisateur</option> 
+                <option value="0" @if($user->role == 0)selected @endif>Jeune</option> 
                 <option value="1" @if($user->role == 1)selected @endif>Coach</option>
                 <option value="2" @if($user->role == 2)selected @endif>Parrain</option>
                 <option value="3" @if($user->role == 3)selected @endif>Admin</option>
@@ -57,9 +57,9 @@
                         </span>
                 @enderror
             </user-input-text>
-            {{--  cpas status  --}}
-            <user-input-text required="false" id="cpas_status" type="text" label="Statut CPAS" value="{{ $user->cpas_status }}" error="@error('cpas_status') is-invalid @enderror">
-                @error('cpas_status')
+            {{--  phone_number  --}}
+            <user-input-text required="false" id="phone_number" type="text" label="Numéro de téléphone" value="{{ $user->phone_number }}" error="@error('phone_number') is-invalid @enderror">
+                @error('phone_number')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
