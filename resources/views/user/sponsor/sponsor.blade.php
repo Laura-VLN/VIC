@@ -2,8 +2,8 @@
 @section('content')
         <title-sec theme="sponsor">Mon Parrain</title-sec>
         <div class="row w-100 m-0">
-            <profile-card v-bind:user="{{  json_encode($sponsor) }}" v-bind:uid="{{ $sponsor->id }}" v-bind:path="/parrain/"></profile-card>
-            <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($documents) }}" cpas="{{$sponsor->cpas_status}}"></profile-document>
+            <profile-card v-bind:user="{{  json_encode($sponsor) }}" v-bind:uid="{{ $sponsor->id }}" v-bind:path="/parrain/" theme="parrain"></profile-card>
+            <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($documents) }}"></profile-document>
         </div>
         <hr class="profile-hr">
 

@@ -2,9 +2,8 @@
 @section('content')
     @if($haveYoung)
         <title-sec theme="formation">Mes Jeunes</title-sec>
-        <div class="row w-100 m-0">
+        <div class="row w-100 ml-md-4">
             @foreach ($youngs as $young)
-                {{-- <a href="/young/{{ $young->id }}"> --}}
                 <profile-card v-bind:user="{{  json_encode($young) }}" v-bind:uid="{{ $young->user_id }}"  v-bind:path="/young/" theme="young"></profile-card>
             @endforeach
         </div>

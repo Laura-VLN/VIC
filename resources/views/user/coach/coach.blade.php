@@ -1,9 +1,15 @@
 @extends('layouts.base')
 @section('content')
+    @if ($hascoaches == null)
+    <div class="container mt-5">
+        <h3>Aucun Coach définit</h3>
+        <p>Veuillez contacter un administrateur si vous pensez avoir un coach</p>
+    </div>  
+    @else
         <title-sec theme="coach">Mon Coach</title-sec>
         <div class="row w-100 m-0">
-            <profile-card v-bind:user="{{  json_encode($coach) }}" v-bind:uid="{{ $coach->id }}" v-bind:path="/coach/"></profile-card>
-            <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($documents) }}" cpas="{{$coach->cpas_status}}"></profile-document>
+            <profile-card v-bind:user="{{ json_encode($coach) }}" v-bind:uid="{{ $coach->id }}" v-bind:path="/coach/" theme="coach"></profile-card>
+            <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($documents) }}"></profile-document>
         </div>
         <hr class="profile-hr">
 
@@ -19,5 +25,5 @@
                 <agenda v-bind:agenda="{{ json_encode($agenda) }}"></agenda>
             </div>
         </div>
-
+    @endif
 @endsection

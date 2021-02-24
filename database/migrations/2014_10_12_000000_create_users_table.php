@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->integer('role')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
         });
     }
 

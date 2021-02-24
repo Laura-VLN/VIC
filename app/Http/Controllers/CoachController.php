@@ -23,12 +23,25 @@ class CoachController extends Controller
         }
     }
 
-    public function showcoach($id){
-        $coach = User::findOrFail($id);
-        $documents = Document::where('user_id',$coach->id)->get();
-        $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$coach->id)->get();
-        return view('user.coach.coach',compact('coach','documents','agenda'));
+    public function showcoach(){
+        $coach = User::
+                    join('coaches_users', 'users.id', '=', 'coaches_users.coach_id')
+                    ->firstWhere('user_id', Auth::user()->id);
+        if(is_null($coach)){
+            return view('user.coach.coach_show')->with('hascoaches', null);
+        }else{
+            $documents = Document::where('user_id',$coach->id)->get();
+            $agenda = Agenda::where('user_id', Auth::user()->id)->where('follower_id',$coach->id)->get();
+            return view('user.coach.coach',compact('coach','documents','agenda'))->with('hascoaches', true);
+        }   
     }
+
+    // public function showcoach($id){
+    //     $coach = User::findOrFail($id);
+    //     $documents = Document::where('user_id',$coach->id)->get();
+    //     $agenda = Agenda::where('user_id',Auth::user()->id)->where('follower_id',$coach->id)->get();
+    //     return view('user.coach.coach',compact('coach','documents','agenda'));
+    // }
     
     public function showyoungs(){
         $iscoach = (Auth::user()->role == 1) ? true : false;
