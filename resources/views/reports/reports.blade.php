@@ -1,8 +1,6 @@
-@extends('layouts.base')
-@section('content')
-
-    @foreach($reports as $report)
-    <reports-table v-bind:report="{{  json_encode($report) }}"></reports-table>
-    @endforeach
-
-@endsection
+@foreach($reports as $report)
+<form action="/report/download/{{$report->id}}" method="POST">
+@csrf
+    <input type="submit">
+</form>
+@endforeach

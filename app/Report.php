@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reports extends Model
+class Report extends Model
 {
     protected $fillable = [
-        'title', 'content', 'author_id'
+        'title', 'link', 'author_id'
     ];
 }

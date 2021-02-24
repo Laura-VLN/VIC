@@ -12,8 +12,7 @@
                 <form class="text-left mx-5 my-4" method="POST" action="{{route('upload.uploadReport')}}" enctype="multipart/form-data">
                     @csrf
                     <input class="my-2" type="text" name="title" id="" placeholder="intitulé"><br>
-                    <textarea id="story" name="report" rows="5" placeholder="Contenu du rapport"></textarea><br>
-                    <!-- <input type="file" name="report"><br> -->
+                    <input type="file" name="report"><br>
                     <input type="submit" value="Envoyer">
                 </form>
             </div>
