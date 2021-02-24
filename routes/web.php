@@ -76,7 +76,6 @@ Route::group(['middleware' => 'auth'],function(){
             Route::get('/admin/agenda/create','AdminController@agendaCreateView');
 
             Route::get('/admin/rapport','AdminController@GetReports');
-
             
             Route::post('/admin/user/create','AdminController@userCreate');
             Route::post('/admin/user/edit/{id}','AdminController@userEdit');
