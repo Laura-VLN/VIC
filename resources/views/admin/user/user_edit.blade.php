@@ -30,7 +30,7 @@
                 @enderror
             </user-input-text>
             {{--  role  --}}
-            <user-input-dropdown value="{{ $user->role }}" required="true" id="role" label="Grade" error="@error('role') is-invalid @enderror">
+            <user-input-dropdown value="{{ $user->role }}" required="true" id="role" label="Rôle" error="@error('role') is-invalid @enderror">
                 <option value="0" @if($user->role == 0)selected @endif>Jeune</option> 
                 <option value="1" @if($user->role == 1)selected @endif>Coach</option>
                 <option value="2" @if($user->role == 2)selected @endif>Parrain</option>
@@ -75,7 +75,7 @@
             </user-input-text>
 
             {{--  coach  --}}
-                <user-input-slimselect label="Coach" id="coaches" name="coaches[]" error="@error('coaches') is-invalid @enderror">
+                <user-input-slimselect-unique label="Coach" id="coaches" name="coaches[]" error="@error('coaches') is-invalid @enderror">
                     @foreach ($coachs as $coach)
                         <option value={{ $coach->id}} @if(array_search($coach->id, $coaches_user) !== false)selected @endif >{{$coach->first_name}} {{$coach->last_name}}</option>
                     @endforeach
@@ -84,7 +84,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                </user-input-slimselect> 
+                </user-input-slimselect-unique> 
             
             {{--  sponsor  --}}
             <user-input-slimselect label="Parrain" id="sponsors" name="sponsors[]" error="@error('sponsors') is-invalid @enderror">

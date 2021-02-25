@@ -49,9 +49,6 @@ Vue.component('agenda-create', require('./components/Utils/AgendaCreate.vue').de
 
 
 
-
-
-
 Vue.component('dashboardadmin', require('./components/Navs/DashboardAdmin.vue').default);
 Vue.component('admin-layout', require('./components/Admin/LayoutAdmin.vue').default);
 Vue.component('admin-agenda-list', require('./components/Admin/AdminAgenda/LayoutAgendaList.vue').default);
@@ -65,7 +62,7 @@ Vue.component('user-input-textarea', require('./components/Admin/AdminUser/UserE
 Vue.component('user-input-slimselect', require('./components/Admin/AdminUser/UserEditInputSlimSelect.vue').default); /////////////////////////
 Vue.component('user-input-images', require('./components/Admin/AdminHousing/UserEditInputImages.vue').default);
 Vue.component('user-input-agenda', require('./components/Admin/AdminAgenda/InputUserAgenda.vue').default);
-
+Vue.component('user-input-slimselect-unique', require('./components/Admin/AdminUser/UserEditInputSlimSelectUnique.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
