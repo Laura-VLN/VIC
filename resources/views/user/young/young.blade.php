@@ -8,14 +8,9 @@
         <div class="row d-flex">
             {{-- recement --}}
             <div class="col-12 col-md-6 d-flex flex-column text-center pt-3">
-                <h4 class="ml-5 mr-auto px-1 title-profile pb-1 mb-3">Créer un compte rendu</h4>
-                <form class="text-left mx-5 my-4" method="POST" action="{{route('upload.uploadReport')}}" enctype="multipart/form-data">
-                    @csrf
-                    <input class="my-2" type="text" name="title" id="" placeholder="intitulé"><br>
-                    <textarea id="story" name="report" rows="5" placeholder="Contenu du rapport"></textarea><br>
-                    <!-- <input type="file" name="report"><br> -->
-                    <input type="submit" value="Envoyer">
-                </form>
+                <h4 class="ml-5 mr-auto px-1 title-profile pb-1 mb-3">Créer un compte rendu <a href="/young/create_report/{{$young->id}}" class="text-dark"><i class="fas fa-plus"></i></a></h4>
+                {{-- VUE Component --}}
+                <report v-bind:reports="{{ json_encode($reports) }}"></report>
             </div>
             {{-- Agenda --}}
             <div class="col-12 col-md-6 d-flex flex-column pt-3 profile-vr pr-0">

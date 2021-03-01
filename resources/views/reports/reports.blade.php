@@ -1,8 +1,7 @@
 @extends('layouts.base')
 @section('content')
-
-    @foreach($reports as $report)
-    <reports-table v-bind:report="{{  json_encode($report) }}"></reports-table>
-    @endforeach
-
+<div class="container">
+    <title-sec theme="formation">Créer un rapport</title-sec>
+    <report-create csrf="{{ csrf_token() }}" :youngid="{{ $user->id }}"></report-create>
+</div>
 @endsection

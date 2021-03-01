@@ -103,8 +103,12 @@ Vue.component(
     require("./components/Utils/AgendaCreate.vue").default
 );
 Vue.component(
-    "reports-table",
-    require("./components/Reports/ReportsTable.vue").default
+    "report",
+    require("./components/Reports/Report.vue").default
+);
+Vue.component(
+    "report-create",
+    require("./components/Reports/ReportCreate.vue").default
 );
 
 Vue.component(
@@ -167,5 +171,5 @@ Vue.component(
  */
 
 const app = new Vue({
-    el: "#app",
+    el: "#app"
 });

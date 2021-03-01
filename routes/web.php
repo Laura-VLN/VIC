@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'],function(){
         Route::get('/young','CoachController@showyoungs');
         Route::get('/profile/upload/{id}','DocumentController@index');
         Route::get('/young/create_agenda/{id}','CoachController@storeAgendaView');
+        Route::get('/young/create_report/{id}','ReportController@storeReportView');
         Route::get('/profile/rapport','ReportController@GetCoachReports');
 
         
@@ -45,7 +46,7 @@ Route::group(['middleware' => 'auth'],function(){
         Route::post('/young/{id}','CoachController@addAgenda');
         Route::post('/profile/upload/{id}','DocumentController@store');
         Route::post('/profile/download','DocumentController@get');
-        Route::post('/report/upload','ReportController@store')->name('upload.uploadReport');
+        Route::post('/report/{id}','ReportController@store');
         Route::post('/report/download/{id}','ReportController@get');
 
 

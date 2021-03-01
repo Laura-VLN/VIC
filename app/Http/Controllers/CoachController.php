@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Agenda;
 use App\Document;
+use App\Reports;
 
 class CoachController extends Controller
 {
@@ -58,7 +59,8 @@ class CoachController extends Controller
         $young = User::findOrFail($id);
         $document = Document::where('user_id',$young->id)->get();
         $agenda = Agenda::where('user_id',$young->id)->where('follower_id',Auth::user()->id)->get();
-        return view('user.young.young',compact('young', 'document', 'agenda'));
+        $reports = Reports::where('young_id',$young->id)->get();
+        return view('user.young.young',compact('young', 'document', 'agenda', 'reports'));
     }
 
     public function addAgenda(Request $request){
@@ -88,7 +90,8 @@ class CoachController extends Controller
         $young = User::findOrFail($validrequest['dest']);
         $document = Document::where('user_id',$validrequest['dest']);
         $agenda = Agenda::where('user_id',$validrequest['dest'])->where('follower_id', Auth::user()->id)->get();
-        return view('user.young.young',compact('young','document','agenda'))->with('haveYoung',true);
+        $reports = Reports::where('young_id',$young->id)->get();
+        return view('user.young.young',compact('young','document','agenda', 'reports'))->with('haveYoung',true);
     }
 
     public function storeAgendaView($id){
