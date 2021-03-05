@@ -30,7 +30,7 @@
                 @enderror
             </user-input-text>
             {{--  role  --}}
-            <user-input-dropdown value="{{ $user->role }}" required="true" id="role" label="Rôle" error="@error('role') is-invalid @enderror">
+            <user-input-dropdown value="{{ $user->role }}" required="true" id="role" label="Rôle" error="@error('role') is-invalid @enderror" :selectedRole="selectedRole">
                 <option value="0" @if($user->role == 0)selected @endif>Jeune</option> 
                 <option value="1" @if($user->role == 1)selected @endif>Coach</option>
                 <option value="2" @if($user->role == 2)selected @endif>Parrain</option>
@@ -73,9 +73,8 @@
                         </span>
                 @enderror
             </user-input-text>
-
             {{--  coach  --}}
-                <user-input-slimselect-unique label="Coach" id="coaches" name="coaches[]" error="@error('coaches') is-invalid @enderror">
+                <user-input-slimselect-unique v-if="getCoachInput == 0" label="Coach" id="coaches" name="coaches[]" error="@error('coaches') is-invalid @enderror">
                     @foreach ($coachs as $coach)
                         <option value={{ $coach->id}} @if(array_search($coach->id, $coaches_user) !== false)selected @endif >{{$coach->first_name}} {{$coach->last_name}}</option>
                     @endforeach
@@ -87,16 +86,16 @@
                 </user-input-slimselect-unique> 
             
             {{--  sponsor  --}}
-            <user-input-slimselect label="Parrain" id="sponsors" name="sponsors[]" error="@error('sponsors') is-invalid @enderror">
-                    @foreach ($sponsors as $sponsor)
-                        <option value={{ $sponsor->id}} @if(array_search($sponsor->id, $sponsors_user) !== false)selected @endif >{{$sponsor->first_name}} {{$sponsor->last_name}}</option>
-                    @endforeach
-                    @error('sponsors')
-                        <span class="invalid-feedback" role="alert" v-slot:error>
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-            </user-input-slimselect>
+                <user-input-slimselect label="Parrain" id="sponsors" name="sponsors[]" error="@error('sponsors') is-invalid @enderror">
+                        @foreach ($sponsors as $sponsor)
+                            <option value={{ $sponsor->id}} @if(array_search($sponsor->id, $sponsors_user) !== false)selected @endif >{{$sponsor->first_name}} {{$sponsor->last_name}}</option>
+                        @endforeach
+                        @error('sponsors')
+                            <span class="invalid-feedback" role="alert" v-slot:error>
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                </user-input-slimselect>
 
             <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-2">

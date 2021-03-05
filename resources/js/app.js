@@ -7,6 +7,12 @@
 require('./bootstrap');
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+/**
+ * VueJS Bus to pass variable from a component to another
+ * (UserEditInputDropdown --> user-input-slimselect and user-input-slimselct-multiple)
+ */
+export const bus = new Vue();
+
 window.Vue = require('vue');
 
 /**

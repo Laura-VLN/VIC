@@ -12,14 +12,25 @@
 
 <script>
     import SlimSelect from 'slim-select'
+    import {bus} from '../../../.././js/app'
     export default {
         props:['id','label','error','name'],
+        data() {
+            return {
+                getCoachInput : '',
+            }
+        },
         mounted() {
             new SlimSelect({
                 select: '#' + this.id,
                 showContent: 'up',
                 allowDeselect: true
-            })
-        },        
+            }),
+
+            bus.$on('getCoachSponsorInput', (value) =>{
+                this.getCoachInput = value;
+                console.log (value);
+            }),
+        }
     }
 </script>

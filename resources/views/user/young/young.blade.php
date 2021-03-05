@@ -6,7 +6,7 @@
             <profile-document csrf="{{csrf_token()}}" v-bind:documents="{{  json_encode($document) }}"></profile-document>
         </div>
         <div class="row d-flex">
-            {{-- recement --}}
+            {{-- Compte-rendu --}}
             <div class="col-12 col-md-6 d-flex flex-column text-center pt-3">
                 <h4 class="ml-5 mr-auto px-1 title-profile pb-1 mb-3">Créer un compte rendu</h4>
                 <form class="text-left mx-5 my-4" method="POST" action="{{route('upload.uploadReport')}}" enctype="multipart/form-data">
