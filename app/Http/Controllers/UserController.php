@@ -20,7 +20,8 @@ class UserController extends Controller
         $user = Auth::user();
         $documents = Document::where('user_id',$user->id)->get();
         $agenda = Agenda::where('user_id',$user->id)->orWhere('follower_id',$user->id)->get();
-        return view('user.user',compact('user','documents','agenda'));
+        $reports = Reports::where('young_id',$user->id)->get();
+        return view('user.user',compact('user','documents','agenda', 'reports'));
     }
 
     /**
