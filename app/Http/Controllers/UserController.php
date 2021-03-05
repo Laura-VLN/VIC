@@ -6,6 +6,7 @@ use App\User;
 use Auth;
 use App\Document;
 use App\Agenda;
+use App\Reports;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
