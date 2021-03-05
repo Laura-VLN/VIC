@@ -74,7 +74,7 @@
                 @enderror
             </user-input-text>
             {{--  coach  --}}
-                <user-input-slimselect-unique v-if="getCoachInput == 0" label="Coach" id="coaches" name="coaches[]" error="@error('coaches') is-invalid @enderror">
+                <user-input-slimselect-unique label="Coach" id="coaches" name="coaches[]" error="@error('coaches') is-invalid @enderror">
                     @foreach ($coachs as $coach)
                         <option value={{ $coach->id}} @if(array_search($coach->id, $coaches_user) !== false)selected @endif >{{$coach->first_name}} {{$coach->last_name}}</option>
                     @endforeach
