@@ -13,6 +13,7 @@
         {{-- recement --}}
         <div class="col-12 col-md-6 d-flex flex-column text-center pt-3">
             <h4 class="ml-5 mr-auto px-1 title-profile pb-1 mb-3">Récemment</h4>
+            <report v-bind:reports="{{ json_encode($reports) }}"></report>
         </div>
         {{-- Agenda --}}
         <div class="col-12 col-md-6 d-flex flex-column pt-3 profile-vr pr-0">
